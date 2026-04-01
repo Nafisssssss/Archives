@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naiyaz Nafis</title><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,600&family=Geist+Mono:wght@300;400&display=swap" rel="stylesheet"><style>
+:root {
+  --bg: #0a0a0a;
+  --text: #eaeaea;
+  --accent: #c8a96a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none;
+}
+
+body {
+  font-family: 'Geist Mono', monospace;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Cursor */
+.cursor {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.15s ease;
+}
+
+/* Nav */
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 40px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: rgba(10,10,10,0.6);
+  backdrop-filter: blur(10px);
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text);
+  margin-left: 20px;
+  position: relative;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+/* Hero */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 10%;
+}
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(48px, 8vw, 96px);
+}
+
+.hero p {
+  margin-top: 10px;
+  color: #aaa;
+}
+
+.location {
+  color: var(--accent);
+  margin-top: 5px;
+}
+
+/* Gallery */
+.gallery {
+  padding: 100px 10%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.gallery img {
+  width: 100%;
+  filter: grayscale(100%);
+  transition: 0.4s ease;
+}
+
+.gallery img:hover {
+  filter: grayscale(0%);
+  transform: scale(1.02);
+}
+
+/* Links */
+.links {
+  padding: 100px 10%;
+}
+
+.links a {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: var(--text);
+  text-decoration: none;
+  position: relative;
+}
+
+.links a::after {
+  content: "→";
+  position: absolute;
+  right: -20px;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.links a:hover {
+  color: var(--accent);
+}
+
+.links a:hover::after {
+  right: -30px;
+  opacity: 1;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 40px;
+  color: #777;
+}
+
+/* Animation */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style></head><body><div class="cursor"></div>
+<div class="cursor-ring"></div><nav>
+  <div>Naiyaz Nafis</div>
+  <div>
+    <a href="#gallery">Gallery</a>
+    <a href="#links">Links</a>
+  </div>
+</nav><section class="hero fade-up">
+  <h1>Naiyaz Nafis</h1>
+  <div class="location">Dhaka, Bangladesh</div>
+  <p>I see things differently. Sometimes I photograph them.</p>
+</section><section id="gallery" class="gallery fade-up">
+  <img src="https://picsum.photos/600/800?random=1">
+  <img src="https://picsum.photos/600/800?random=2">
+  <img src="https://picsum.photos/600/800?random=3">
+  <img src="https://picsum.photos/600/800?random=4">
+  <img src="https://picsum.photos/600/800?random=5">
+  <img src="https://picsum.photos/600/800?random=6">
+</section><section id="links" class="links fade-up">
+  <a href="https://www.instagram.com/naf1s_.lucen._?igsh=Mjd5Mm05eXl3dDZ0" target="_blank">Instagram</a>
+  <a href="#">VSCO</a>
+  <a href="mailto:naiyaz.nafis7@gmail.com">Email</a>
+</section><footer>
+  © <span id="year"></span> Naiyaz Nafis
+</footer><script>
+/* Year */
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* Cursor */
+const cursor = document.querySelector(".cursor");
+const ring = document.querySelector(".cursor-ring");
+
+let mouseX = 0, mouseY = 0;
+let ringX = 0, ringY = 0;
+
+document.addEventListener("mousemove", e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+});
+
+function animate() {
+  ringX += (mouseX - ringX) * 0.1;
+  ringY += (mouseY - ringY) * 0.1;
+  ring.style.transform = `translate(${ringX - 16}px, ${ringY - 16}px)`;
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script></body>
+</html>
